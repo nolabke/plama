@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PLAMA. — Koszulki z nadrukowaną plamą</title>
+<style>
+  :root{
+    --cream:#f4ede1;
+    --cream-2:#eee3d0;
+    --ink:#2a2118;
+    --ink-soft:#5c4d3c;
+    --coffee:#6b4226;
+    --ketchup:#a4291f;
+    --mustard:#c98a1f;
+    --wine:#5e2233;
+    --line:#d8c8ab;
+    --card:#fffaf0;
+    --accent:#c98a1f;
+    --radius:18px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Segoe UI", ui-sans-serif, system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    background:var(--cream);
+    color:var(--ink);
+    line-height:1.5;
+  }
+  h1,h2,h3{
+    font-family:Georgia, "Times New Roman", serif;
+    margin:0 0 .4em 0;
+    color:var(--ink);
+  }
+  a{color:inherit;}
+  img,svg{display:block;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* NAV */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(244,237,225,.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{
+    display:flex;align-items:center;justify-content:space-between;
+    height:72px;
+    gap:16px;
+  }
+  .logo{
+    font-family:Georgia, serif;
+    font-weight:700;
+    font-size:1.5rem;
+    letter-spacing:.02em;
+    display:flex;align-items:center;gap:8px;
+    flex-shrink:0;
+  }
+  .logo .dot-stain{width:16px;height:14px;border-radius:60% 40% 55% 45% / 50% 55% 45% 50%;background:var(--coffee);display:inline-block;transform:rotate(-8deg);}
+  nav ul{list-style:none;display:flex;gap:28px;margin:0;padding:0;}
+  nav ul a{text-decoration:none;font-size:.95rem;color:var(--ink-soft);font-weight:600;white-space:nowrap;}
+  nav ul a:hover{color:var(--ink);}
+  .nav-right{display:flex;align-items:center;gap:14px;flex-shrink:0;}
+  .langswitch{position:relative;}
+  .lang-current{
+    display:flex;align-items:center;gap:7px;
+    background:var(--card);border:1px solid var(--line);
+    padding:9px 14px;border-radius:999px;
+    font-size:.82rem;font-weight:700;letter-spacing:.02em;
+    color:var(--ink);cursor:pointer;
+  }
+  .lang-current:hover{border-color:var(--ink-soft);}
+  .lang-chevron{transition:transform .18s ease;flex-shrink:0;}
+  .langswitch.open .lang-chevron{transform:rotate(180deg);}
+  .lang-menu{
+    position:absolute;top:calc(100% + 8px);right:0;
+    background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:6px;min-width:150px;
+    box-shadow:0 18px 40px -14px rgba(42,33,24,.35);
+    display:flex;flex-direction:column;gap:2px;
+    opacity:0;visibility:hidden;transform:translateY(-6px);
+    transition:opacity .16s ease, transform .16s ease, visibility .16s;
+    z-index:60;
+  }
+  .langswitch.open .lang-menu{opacity:1;visibility:visible;transform:translateY(0);}
+  .lang-menu button{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;
+    width:100%;text-align:left;border:none;background:transparent;
+    padding:9px 12px;border-radius:9px;
+    font-size:.88rem;font-weight:600;color:var(--ink-soft);cursor:pointer;
+  }
+  .lang-menu button:hover{background:var(--cream-2);color:var(--ink);}
+  .lang-menu button.active{background:var(--ink);color:var(--cream);}
+  .lang-menu button .check{opacity:0;}
+  .lang-menu button.active .check{opacity:1;}
+  .cart{
+    position:relative;
+    display:flex;align-items:center;gap:6px;
+    background:var(--ink);color:var(--cream);
+    padding:9px 16px;border-radius:999px;
+    font-weight:700;font-size:.85rem;
+    border:none;cursor:pointer;white-space:nowrap;
+  }
+  .cart .badge{
+    background:var(--ketchup);color:#fff;
+    border-radius:999px;min-width:18px;height:18px;
+    font-size:.7rem;display:flex;align-items:center;justify-content:center;
+    padding:0 4px;
+  }
+
+  /* HERO */
+  .hero{
+    padding:76px 0 60px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-block;
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:6px 14px;
+    border-radius:999px;
+    font-size:.78rem;
+    font-weight:700;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(2.1rem, 4.2vw, 3.3rem);
+    line-height:1.08;
+    max-width:16ch;
+  }
+  .hero h1 em{
+    font-style:normal;
+    color:var(--ketchup);
+    text-decoration:underline wavy var(--mustard) 3px;
+    text-underline-offset:6px;
+  }
+  .hero p.lead{
+    font-size:1.12rem;
+    color:var(--ink-soft);
+    max-width:46ch;
+    margin:18px 0 28px;
+  }
+  .btnrow{display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 26px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.98rem;
+    text-decoration:none;
+    cursor:pointer;
+    border:2px solid var(--ink);
+    transition:transform .15s ease;
+  }
+  .btn:hover{transform:translateY(-2px);}
+  .btn-primary{background:var(--ink);color:var(--cream);}
+  .btn-ghost{background:transparent;color:var(--ink);}
+  .trust{margin-top:26px;font-size:.85rem;color:var(--ink-soft);display:flex;gap:10px;align-items:center;}
+  .stars{color:var(--mustard);letter-spacing:2px;}
+
+  .hero-visual{
+    position:relative;
+    aspect-ratio:1/1.05;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:28px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 24px 50px -20px rgba(42,33,24,.25);
+  }
+  .tshirt{
+    width:72%;
+    position:relative;
+  }
+  .tshirt svg{width:100%;height:auto;}
+  .hero-tag{
+    position:absolute;
+    background:var(--ink);color:var(--cream);
+    font-size:.72rem;font-weight:700;
+    padding:6px 10px;border-radius:8px;
+    transform:rotate(-6deg);
+  }
+  .hero-tag.t1{top:14%;left:6%;}
+  .hero-tag.t2{bottom:12%;right:4%;transform:rotate(4deg);background:var(--ketchup);}
+
+  /* STRIP */
+  .strip{
+    background:var(--ink);
+    color:var(--cream);
+    padding:12px 0;
+    overflow:hidden;
+    white-space:nowrap;
+  }
+  .strip-inner{
+    display:inline-flex;gap:48px;
+    animation:marquee 22s linear infinite;
+    font-weight:700;font-size:.85rem;letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .strip-inner span{opacity:.85;}
+  @keyframes marquee{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  /* SECTIONS */
+  section{padding:76px 0;}
+  .section-head{max-width:640px;margin:0 auto 44px;text-align:center;}
+  .section-head .eyebrow{margin-bottom:14px;}
+  .section-head h2{font-size:clamp(1.7rem,3vw,2.3rem);}
+  .section-head p{color:var(--ink-soft);font-size:1.02rem;}
+
+  /* HOW IT WORKS */
+  .steps{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:28px;
+  }
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:30px 26px;position:relative;
+  }
+  .step .num{
+    width:38px;height:38px;border-radius:50%;
+    background:var(--ink);color:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    font-weight:700;margin-bottom:18px;
+  }
+  .step h3{font-size:1.15rem;}
+  .step p{color:var(--ink-soft);font-size:.95rem;margin:0;}
+  .step-quote{
+    margin-top:16px;font-style:italic;color:var(--wine);
+    font-size:.88rem;border-left:3px solid var(--mustard);padding-left:10px;
+  }
+
+  /* PRODUCTS */
+  .filters{display:flex;gap:10px;justify-content:center;margin-bottom:34px;flex-wrap:wrap;}
+  .filter{
+    padding:8px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);font-size:.82rem;font-weight:600;color:var(--ink-soft);
+    cursor:default;
+  }
+  .grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    display:flex;flex-direction:column;
+    transition:transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:0 18px 34px -18px rgba(42,33,24,.35);}
+  .card-media{
+    aspect-ratio:1/1;
+    background:var(--cream-2);
+    position:relative;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;
+  }
+  .card-media .shirt-base{width:78%;}
+  .badge-tag{
+    position:absolute;top:10px;left:10px;
+    background:var(--ink);color:var(--cream);
+    font-size:.68rem;font-weight:700;
+    padding:4px 9px;border-radius:6px;
+    text-transform:uppercase;letter-spacing:.03em;
+  }
+  .badge-tag.hot{background:var(--ketchup);}
+  .badge-tag.new{background:var(--mustard);color:var(--ink);}
+  .card-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:8px;flex:1;}
+  .card-body h3{font-size:1.05rem;margin:0;}
+  .card-body .desc{font-size:.85rem;color:var(--ink-soft);min-height:2.6em;}
+  .card-foot{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-top:auto;padding-top:10px;
+    gap:10px;
+  }
+  .price{font-weight:700;font-size:1.05rem;}
+  .add-btn{
+    background:var(--ink);color:var(--cream);border:none;
+    padding:9px 14px;border-radius:999px;font-weight:700;font-size:.8rem;
+    cursor:pointer;white-space:nowrap;
+  }
+  .add-btn:hover{background:var(--ketchup);}
+  .stock{font-size:.72rem;color:var(--ink-soft);opacity:.85;}
+
+  /* TESTIMONIALS */
+  .testi-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  .testi{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:26px;
+  }
+  .testi .stars{display:block;margin-bottom:10px;}
+  .testi p{font-size:.94rem;color:var(--ink);}
+  .testi .who{margin-top:14px;font-size:.82rem;color:var(--ink-soft);font-weight:600;}
+
+  /* BANNER */
+  .banner{
+    background:var(--wine);color:var(--cream);
+    border-radius:24px;
+    padding:52px 44px;
+    display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;
+  }
+  .banner h2{color:var(--cream);font-size:clamp(1.5rem,3vw,2rem);}
+  .banner p{color:#e9d9dd;font-size:.98rem;}
+  .banner .btn-primary{background:var(--cream);color:var(--ink);border-color:var(--cream);}
+
+  /* FAQ */
+  .faq{max-width:760px;margin:0 auto;}
+  .qa{
+    border-bottom:1px solid var(--line);
+    padding:20px 4px;
+  }
+  .qa summary{
+    cursor:pointer;font-weight:700;font-size:1rem;
+    list-style:none;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .qa summary::-webkit-details-marker{display:none;}
+  .qa summary::after{content:"+";font-size:1.4rem;color:var(--ink-soft);transition:transform .2s;}
+  .qa[open] summary::after{transform:rotate(45deg);}
+  .qa p{color:var(--ink-soft);margin:12px 0 0;font-size:.94rem;}
+
+  /* FOOTER */
+  footer{
+    background:var(--ink);color:var(--cream);
+    padding:56px 0 28px;
+    margin-top:40px;
+  }
+  .foot-grid{
+    display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:36px;
+    padding-bottom:36px;border-bottom:1px solid rgba(244,237,225,.15);
+  }
+  footer h4{font-size:.85rem;text-transform:uppercase;letter-spacing:.06em;color:#d8c8ab;margin:0 0 14px;}
+  footer ul{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:9px;}
+  footer ul a{text-decoration:none;color:#e7ddca;font-size:.9rem;}
+  footer ul a:hover{color:#fff;}
+  footer p.tagline{color:#cbb99a;font-size:.9rem;max-width:34ch;}
+  .foot-bottom{
+    padding-top:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+    font-size:.78rem;color:#a9997d;
+  }
+
+  /* TOAST */
+  #toast{
+    position:fixed;left:50%;bottom:28px;transform:translate(-50%,120%);
+    background:var(--ink);color:var(--cream);
+    padding:14px 22px;border-radius:12px;
+    font-size:.9rem;font-weight:600;
+    box-shadow:0 12px 30px -10px rgba(0,0,0,.4);
+    transition:transform .35s cubic-bezier(.2,.8,.2,1);
+    z-index:100;
+    max-width:88vw;
+  }
+  #toast.show{transform:translate(-50%,0);}
+
+  @media (max-width:940px){
+    .hero .wrap{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .testi-grid{grid-template-columns:1fr;}
+    .banner{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr 1fr;}
+    nav ul{display:none;}
+  }
+  @media (max-width:560px){
+    .grid{grid-template-columns:1fr;}
+    .foot-grid{grid-template-columns:1fr;}
+    .lang-menu{right:auto;left:0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <div class="logo"><span class="dot-stain"></span> PLAMA.</div>
+    <ul>
+      <li><a href="#sklep" id="navShop">Sklep</a></li>
+      <li><a href="#jak-to-dziala" id="navHow">Jak to działa</a></li>
+      <li><a href="#opinie" id="navReviews">Opinie</a></li>
+      <li><a href="#faq" id="navFaq">FAQ</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="langswitch" id="langSwitch">
+        <button type="button" class="lang-current" id="langCurrentBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span id="langCurrentLabel">PL</span>
+          <svg class="lang-chevron" width="10" height="6" viewBox="0 0 10 6" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div class="lang-menu" id="langMenu" role="listbox">
+          <button type="button" data-lang="pl" role="option"><span>Polski</span><span class="check">✓</span></button>
+          <button type="button" data-lang="en" role="option"><span>English</span><span class="check">✓</span></button>
+          <button type="button" data-lang="de" role="option"><span>Deutsch</span><span class="check">✓</span></button>
+        </div>
+      </div>
+      <button class="cart" id="cartBtn">🛒 <span id="cartLabel">Koszyk</span> <span class="badge" id="cartCount">0</span></button>
+    </div>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" id="heroEyebrow">Odzież prewencyjna od 2019 r.</span>
+      <h1 id="heroH1">Nikt nie zapyta o <em>tę</em> plamę,<br>jeśli zobaczy tę plamę.</h1>
+      <p class="lead" id="heroLead"></p>
+      <div class="btnrow">
+        <a href="#sklep" class="btn btn-primary" id="btnPrimary">Zobacz kolekcję</a>
+        <a href="#jak-to-dziala" class="btn btn-ghost" id="btnGhost">Jak to działa?</a>
+      </div>
+      <div class="trust"><span class="stars">★★★★★</span> <span id="trustText"></span></div>
+    </div>
+    <div class="hero-visual">
+      <span class="hero-tag t1" id="heroTag1">100% udawane</span>
+      <span class="hero-tag t2" id="heroTag2">Made to embarrass nobody</span>
+      <div class="tshirt" id="heroShirt"></div>
+    </div>
+  </div>
+</section>
+
+<div class="strip">
+  <div class="strip-inner" id="stripInner"></div>
+</div>
+
+<section id="jak-to-dziala">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" id="stepsEyebrow"></span>
+      <h2 id="stepsH2"></h2>
+      <p id="stepsSub"></p>
+    </div>
+    <div class="steps" id="stepsGrid"></div>
+  </div>
+</section>
+
+<section id="sklep">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" id="shopEyebrow"></span>
+      <h2 id="shopH2"></h2>
+      <p id="shopSub"></p>
+    </div>
+    <div class="filters" id="filters"></div>
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<section id="opinie" style="background:var(--cream-2);">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" id="testiEyebrow"></span>
+      <h2 id="testiH2"></h2>
+    </div>
+    <div class="testi-grid" id="testiGrid"></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="banner">
+      <div>
+        <h2 id="bannerH2"></h2>
+        <p id="bannerP"></p>
+      </div>
+      <a href="#faq" class="btn btn-primary" style="justify-self:start;" id="bannerCta"></a>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow" id="faqEyebrow"></span>
+      <h2 id="faqH2"></h2>
+    </div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="logo" style="color:var(--cream);margin-bottom:12px;"><span class="dot-stain" style="background:var(--mustard);"></span> PLAMA.</div>
+        <p class="tagline" id="footTagline"></p>
+      </div>
+      <div>
+        <h4 id="footH1"></h4>
+        <ul id="footList1"></ul>
+      </div>
+      <div>
+        <h4 id="footH2"></h4>
+        <ul id="footList2"></ul>
+      </div>
+      <div>
+        <h4 id="footH3"></h4>
+        <ul id="footList3"></ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span id="footBottom1"></span>
+      <span id="footBottom2"></span>
+    </div>
+  </div>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  // ============================================================
+  // TRANSLATIONS
+  // ============================================================
+  const I18N = {
+    pl: {
+      title: "PLAMA. — Koszulki z nadrukowaną plamą",
+      nav: { shop:"Sklep", how:"Jak to działa", reviews:"Opinie", faq:"FAQ", cart:"Koszyk" },
+      hero: {
+        eyebrow:"Odzież prewencyjna od 2019 r.",
+        h1:'Nikt nie zapyta o <em>tę</em> plamę,<br>jeśli zobaczy tę plamę.',
+        lead:'PLAMA. produkuje koszulki z profesjonalnie zaprojektowanym, w 100% sztucznym zabrudzeniem. Załóż ją, zanim ktoś zauważy prawdziwą wpadkę — a kiedy spyta „co ci się stało?”, po prostu wzrusz ramionami i powiedz: „a, to? To tylko nadruk”.',
+        btnPrimary:"Zobacz kolekcję", btnGhost:"Jak to działa?",
+        trust:"4,8/5 z 2 114 „incydentów” zamaskowanych na czas",
+        tag1:"100% udawane", tag2:"Made to embarrass nobody"
+      },
+      strip: ["☕ Poranna Kawa", "🍅 Klasyczny Keczup", "🍛 Curry Incydent", "🍫 Czekolada… Chyba", "🍷 Sos Winny Wieczór", "🌿 Trawa (Naprawdę)"],
+      steps: {
+        eyebrow:"Instrukcja obsługi wstydu", h2:"Trzy kroki do zachowania twarzy",
+        sub:"Bo najlepsza przykrywka to taka, o którą nikt nie pyta dwa razy.",
+        items:[
+          {title:"Wybierz swoją plamę", desc:"Kawa, keczup, curry czy „tajemniczy bury” — masz wypadek, my mamy nadruk, który go przebije.", quote:"„Coś się rozlało? U mnie to się nazywa design.”"},
+          {title:"Załóż ją, zanim ktoś spojrzy", desc:"Kluczem jest wyprzedzenie. Prawdziwa plama nie ma szans w starciu z naszą, o wiele bardziej fotogeniczną.", quote:"„Nikt nie szuka drugiej plamy, jeśli pierwsza już wszystkich zszokowała.”"},
+          {title:"Odpowiedz z klasą", desc:"Gdy ktoś zapyta „co ci się stało?”, uśmiechnij się i powiedz: „a, to? To tylko nadruk”. Rozmowa skończona.", quote:"„I tak, jesteśmy świadomi pewnego kultowego skeczu o hot dogu i spodniach. Uważajcie na siebie tam, w biurze.”"}
+        ]
+      },
+      shop: {
+        eyebrow:"Kolekcja Wiosna / Wpadka 2026", h2:"Nasze bestsellerowe zabrudzenia",
+        sub:"Każdy nadruk projektowany ręcznie tak, by wyglądał maksymalnie niewinnie — albo maksymalnie podejrzanie. Ty wybierasz strategię.",
+        filters:["Wszystkie","Jedzenie","Napoje","Bez komentarza","Sezonowe"],
+        addBtn:"Dodaj do koszyka",
+        stock:(n)=>`Zostało ${n} szt.`
+      },
+      products: [
+        {name:"Klasyczny Keczup", tag:"Bestseller", tagClass:"hot", price:"89 zł", color:"#a4291f", ring:"#e07a5f", desc:"Uniwersalna, czerwona plama na wysokości piersi. Pasuje do każdej hot-dogowej wymówki."},
+        {name:"Poranna Kawa", tag:"Bestseller", tagClass:"hot", price:"89 zł", color:"#6b4226", ring:"#a9764f", desc:"Brązowa smuga w kształcie pośpiechu. Idealna na poranne spotkania, których nie chciałeś odbyć."},
+        {name:"Curry Incydent", tag:"Nowość", tagClass:"new", price:"95 zł", color:"#c98a1f", ring:"#e3b94a", desc:"Żółto-pomarańczowa plama z lekką nutą kuminu. Nikt nie zapyta, skąd ten zapach."},
+        {name:"Tajemniczy Bury", tag:"Bez komentarza", tagClass:"", price:"99 zł", color:"#4a4a44", ring:"#8a8a7f", desc:"Nie pytamy, nie tłumaczymy. Uniwersalna plama do sytuacji, o których nie mówimy."},
+        {name:"Czekolada… Chyba", tag:"", tagClass:"", price:"89 zł", color:"#3b2416", ring:"#7a5233", desc:"99% szans, że to czekolada. 1% niepewności, który sprawia, że nikt nie dopyta."},
+        {name:"Sos Winny Wieczór", tag:"Sezonowe", tagClass:"new", price:"105 zł", color:"#5e2233", ring:"#a45c73", desc:"Głęboka bordowa plama na przyjęcia, po których wolisz nie pamiętać szczegółów."},
+        {name:"Barszcz Wigilijny", tag:"Sezonowe", tagClass:"new", price:"105 zł", color:"#8e1f3b", ring:"#c15b74", desc:"Tradycja każe rozlać barszcz choć raz w roku. My robimy to za Ciebie, bez prania obrusu."},
+        {name:"Trawa (Naprawdę Tylko Trawa)", tag:"", tagClass:"", price:"85 zł", color:"#4f6b2e", ring:"#8aa85f", desc:"Zielona smuga na łokciu. Tak, naprawdę tylko trawa. Przestań pytać, Karolina."}
+      ],
+      testi: {
+        eyebrow:"Zaufali nam", h2:"Historie, które wolelibyśmy pozostawić bez kontekstu",
+        items:[
+          {stars:5, text:"Prawdziwej plamy nikt nie zauważył. Poszedłem na spotkanie zarządu jak bohater, nie jak ofiara krzesła biurowego.", who:"Marek, 41, Dział Sprzedaży"},
+          {stars:5, text:"Mąż spytał, co się stało z koszulką. Powiedziałam, że to limitowana kolekcja. Uwierzył. Ja też prawie uwierzyłam.", who:"Ola, 29, freelancerka"},
+          {stars:4, text:"Zamówiłem 'Curry Incydent' na wesele kuzyna. Nikt nie zapytał o prawdziwy sos. Minus gwiazdka, bo teraz i tak tęsknię za tym curry.", who:"Bartek, 33, drużba"}
+        ]
+      },
+      banner: {
+        h2:"Plama specjalna, na zamówienie",
+        p:"Masz konkretny incydent, który wymaga precyzyjnej przykrywki? Prześlij nam opis (lub, jeśli musisz, zdjęcie) — nasz zespół graficzny zaprojektuje nadruk 1:1, byleby nikt się nie domyślił, co się naprawdę stało.",
+        cta:"Zapytaj o wycenę"
+      },
+      faq: {
+        eyebrow:"Zanim napiszesz do supportu", h2:"Pytania, które i tak wszyscy zadają",
+        items:[
+          {q:"Czy nadruk naprawdę zamaskuje moją plamę?", a:"Statystycznie — tak, w 87% przypadków uwaga otoczenia skupia się na naszym, znacznie bardziej efektownym zabrudzeniu. Pozostałe 13% to osoby, które i tak nic nie zauważają."},
+          {q:"Co jeśli moja plama jest w nieco innym miejscu?", a:"Mamy wzory na rękawie, plecach, kołnierzu i klasyczne „w okolicach paska”. Jeśli Twój przypadek jest wyjątkowy, skorzystaj z opcji „plama na zamówienie” powyżej."},
+          {q:"Czy plamy naprawdę są nadrukowane, a nie prawdziwe?", a:"Tak, wszystkie plamy PLAMA. są w 100% cyfrowe i przechodzą pranie w 60°C bez utraty koloru — w przeciwieństwie do tej drugiej, prawdziwej."},
+          {q:"Jaki jest czas dostawy?", a:"3–5 dni roboczych. Jeśli potrzebujesz przykrywki na już, polecamy trzymać jedną koszulkę w zapasie w szufladzie biurka. Tak jak my."},
+          {q:"Zwroty i wymiany?", a:"30 dni na zwrot, pod warunkiem że koszulka wróci do nas czystsza niż ją wysłaliśmy — co, mówiąc szczerze, nie powinno być trudne."}
+        ]
+      },
+      footer: {
+        tagline:"Odzież dla wszystkich, którzy raz w życiu potrzebowali dwóch sekund więcej, zanim ktoś zauważył to, co naprawdę się stało.",
+        h1:"Sklep", h2:"Obsługa", h3:"O nas",
+        list1:["Bestsellery","Nowości","Karty podarunkowe","Plama na zamówienie"],
+        list2:["FAQ","Wysyłka i zwroty","Rozmiarówka","Kontakt (dyskretny)"],
+        list3:["Nasza misja","Opinie","Prasa","Kariera"],
+        bottom1:"© 2026 PLAMA. Wszelkie prawa zastrzeżone. Wszystkie plamy fikcyjne, wszystkie wpadki — niestety prawdziwe.",
+        bottom2:"Nie ponosimy odpowiedzialności za plamy ukryte pod naszymi plamami."
+      },
+      toast: {
+        messages:[
+          "Dodano do koszyka. Twoje wcześniejsze wpadki są już bezpieczne.",
+          "Świetny wybór. Nikt się nie domyśli, co się naprawdę stało.",
+          "W koszyku! Zalecamy założyć ją, zanim ktokolwiek wejdzie do pokoju.",
+          "Dodano. Twoja przykrywka jest już w drodze."
+        ],
+        empty:"Koszyk pusty. Miejmy nadzieję, że tak zostanie.",
+        hasItems:(n)=>`W koszyku: ${n} szt. Płatność przyjmujemy tylko dyskretnie.`
+      }
+    },
+
+    en: {
+      title: "PLAMA. — T-Shirts With a Printed Stain",
+      nav: { shop:"Shop", how:"How it works", reviews:"Reviews", faq:"FAQ", cart:"Cart" },
+      hero: {
+        eyebrow:"Preventive apparel since 2019",
+        h1:'Nobody will ask about <em>that</em> stain,<br>if they can see this one.',
+        lead:'PLAMA. makes t-shirts with a professionally designed, 100% fake stain. Put it on before anyone spots the real slip-up — and when someone asks "what happened?", just shrug and say: "oh, that? It\'s just the print."',
+        btnPrimary:"Shop the collection", btnGhost:"How it works?",
+        trust:"4.8/5 from 2,114 “incidents” covered in time",
+        tag1:"100% fake", tag2:"Made to embarrass nobody"
+      },
+      strip: ["☕ Morning Coffee", "🍅 Classic Ketchup", "🍛 Curry Incident", "🍫 Chocolate… Probably", "🍷 Wine Night Sauce", "🌿 Grass (Really)"],
+      steps: {
+        eyebrow:"Shame Management 101", h2:"Three steps to saving face",
+        sub:"Because the best cover story is the one nobody asks about twice.",
+        items:[
+          {title:"Pick your stain", desc:"Coffee, ketchup, curry, or a “mystery grey” — you had the accident, we've got the print that outshines it.", quote:"“Something spilled? Around here, we call that design.”"},
+          {title:"Put it on before anyone looks", desc:"Timing is everything. A real stain doesn't stand a chance against ours — which, frankly, is far more photogenic.", quote:"“Nobody goes looking for a second stain once the first one already stole the show.”"},
+          {title:"Answer with class", desc:"When someone asks “what happened?”, smile and say: “oh, that? It's just the print.” Conversation over.", quote:"“And yes, we're aware of a certain cult sketch about a hot dog and a pair of pants. Stay safe out there in the office.”"}
+        ]
+      },
+      shop: {
+        eyebrow:"Spring / Slip-Up Collection 2026", h2:"Our bestselling stains",
+        sub:"Every print is hand-designed to look either maximally innocent — or maximally suspicious. You choose the strategy.",
+        filters:["All","Food","Drinks","No Comment","Seasonal"],
+        addBtn:"Add to cart",
+        stock:(n)=>`${n} left in stock`
+      },
+      products: [
+        {name:"Classic Ketchup", tag:"Bestseller", tagClass:"hot", price:"21 €", color:"#a4291f", ring:"#e07a5f", desc:"A versatile red stain at chest height. Works with any hot-dog-related excuse."},
+        {name:"Morning Coffee", tag:"Bestseller", tagClass:"hot", price:"21 €", color:"#6b4226", ring:"#a9764f", desc:"A brown streak shaped like a rush. Perfect for the morning meeting you didn't want to attend."},
+        {name:"Curry Incident", tag:"New", tagClass:"new", price:"23 €", color:"#c98a1f", ring:"#e3b94a", desc:"A yellow-orange stain with a hint of cumin. No one will ask where that smell is coming from."},
+        {name:"Mystery Grey", tag:"No Comment", tagClass:"", price:"24 €", color:"#4a4a44", ring:"#8a8a7f", desc:"We don't ask, we don't explain. An all-purpose stain for situations we don't talk about."},
+        {name:"Chocolate… Probably", tag:"", tagClass:"", price:"21 €", color:"#3b2416", ring:"#7a5233", desc:"99% chance it's chocolate. The 1% doubt is exactly what keeps people from asking twice."},
+        {name:"Wine Night Sauce", tag:"Seasonal", tagClass:"new", price:"25 €", color:"#5e2233", ring:"#a45c73", desc:"A deep burgundy stain for parties you'd rather not remember in detail."},
+        {name:"Christmas Borscht", tag:"Seasonal", tagClass:"new", price:"25 €", color:"#8e1f3b", ring:"#c15b74", desc:"Tradition says you spill the borscht at least once a year. We do it for you — no tablecloth required."},
+        {name:"Grass (Really, Just Grass)", tag:"", tagClass:"", price:"20 €", color:"#4f6b2e", ring:"#8aa85f", desc:"A green streak on the elbow. Yes, really, just grass. Stop asking, Caroline."}
+      ],
+      testi: {
+        eyebrow:"They trust us", h2:"Stories we'd rather leave without context",
+        items:[
+          {stars:5, text:"Nobody noticed the real stain. I walked into the board meeting like a hero, not like a victim of the office chair.", who:"Mark, 41, Sales"},
+          {stars:5, text:"My husband asked what happened to the shirt. I said it was a limited edition. He believed it. I almost did too.", who:"Olivia, 29, freelancer"},
+          {stars:4, text:"Ordered the 'Curry Incident' for my cousin's wedding. Nobody asked about the real sauce. Minus one star, because now I miss that curry.", who:"Bart, 33, best man"}
+        ]
+      },
+      banner: {
+        h2:"Custom stains, made to order",
+        p:"Got a very specific incident that needs precision cover? Send us a description (or, if you must, a photo) — our design team will create a 1:1 print, so no one ever guesses what really happened.",
+        cta:"Get a quote"
+      },
+      faq: {
+        eyebrow:"Before you email support", h2:"Questions everyone asks anyway",
+        items:[
+          {q:"Will the print really cover my stain?", a:"Statistically speaking — yes. In 87% of cases, everyone's attention shifts to our far more eye-catching stain. The other 13% just don't notice anything, ever."},
+          {q:"What if my stain is in a slightly different spot?", a:"We offer prints for the sleeve, back, collar, and the classic “around the waistband” zone. For anything more specific, use the custom-stain option above."},
+          {q:"Are the stains really printed, not real?", a:"Yes — every PLAMA. stain is 100% digital and survives a 60°C wash without fading, unlike the other one."},
+          {q:"What's the delivery time?", a:"3–5 business days. If you need cover immediately, we recommend keeping a spare shirt in your desk drawer. That's what we do."},
+          {q:"Returns and exchanges?", a:"30 days to return, as long as the shirt comes back cleaner than we sent it — which, honestly, shouldn't be hard."}
+        ]
+      },
+      footer: {
+        tagline:"Apparel for everyone who's ever needed two extra seconds before anybody noticed what really happened.",
+        h1:"Shop", h2:"Support", h3:"About",
+        list1:["Bestsellers","New arrivals","Gift cards","Custom stain"],
+        list2:["FAQ","Shipping & returns","Size guide","Contact (discreet)"],
+        list3:["Our mission","Reviews","Press","Careers"],
+        bottom1:"© 2026 PLAMA. All rights reserved. All stains fictional, all mishaps — unfortunately real.",
+        bottom2:"We are not responsible for stains hidden under our stains."
+      },
+      toast: {
+        messages:[
+          "Added to cart. Your past mishaps are safe now.",
+          "Great choice. No one will ever guess what really happened.",
+          "In your cart! We recommend putting it on before anyone walks into the room.",
+          "Added. Your cover story is on its way."
+        ],
+        empty:"Cart's empty. Let's hope it stays that way.",
+        hasItems:(n)=>`In your cart: ${n} item(s). We only accept discreet payment.`
+      }
+    },
+
+    de: {
+      title: "PLAMA. — T-Shirts mit aufgedrucktem Fleck",
+      nav: { shop:"Shop", how:"So funktioniert's", reviews:"Bewertungen", faq:"FAQ", cart:"Warenkorb" },
+      hero: {
+        eyebrow:"Präventiv-Mode seit 2019",
+        h1:'Niemand fragt nach <em>jenem</em> Fleck,<br>wenn er diesen hier sieht.',
+        lead:'PLAMA. produziert T-Shirts mit einem professionell gestalteten, zu 100 % aufgedruckten Fleck. Zieh es an, bevor jemand den echten Ausrutscher bemerkt – und wenn jemand fragt „Was ist dir passiert?“, zuckst du einfach mit den Schultern und sagst: „Ach, das? Ist nur der Aufdruck.“',
+        btnPrimary:"Kollektion ansehen", btnGhost:"So funktioniert's",
+        trust:"4,8/5 von 2.114 „Zwischenfällen“ rechtzeitig kaschiert",
+        tag1:"100 % unecht", tag2:"Bringt niemanden in Verlegenheit"
+      },
+      strip: ["☕ Morgenkaffee", "🍅 Klassisches Ketchup", "🍛 Curry-Zwischenfall", "🍫 Schokolade… Vermutlich", "🍷 Weinabend-Soße", "🌿 Gras (Wirklich)"],
+      steps: {
+        eyebrow:"Anleitung für den Ernstfall", h2:"Drei Schritte, um das Gesicht zu wahren",
+        sub:"Denn die beste Ausrede ist die, nach der niemand zweimal fragt.",
+        items:[
+          {title:"Wähl deinen Fleck", desc:"Kaffee, Ketchup, Curry oder ein „mysteriöses Grau“ — du hattest den Unfall, wir haben den Aufdruck, der ihn übertrumpft.", quote:"„Etwas verschüttet? Bei uns heißt das Design.“"},
+          {title:"Zieh es an, bevor jemand hinsieht", desc:"Timing ist alles. Ein echter Fleck hat gegen unseren – deutlich fotogeneren – keine Chance.", quote:"„Niemand sucht nach einem zweiten Fleck, wenn der erste schon alle Blicke auf sich gezogen hat.“"},
+          {title:"Antworte mit Stil", desc:"Wenn jemand fragt „Was ist passiert?“, lächle und sag: „Ach, das? Ist nur der Aufdruck.“ Gespräch beendet.", quote:"„Und ja, uns ist ein gewisser Kult-Sketch über einen Hot Dog und eine Hose bekannt. Passt im Büro auf euch auf.“"}
+        ]
+      },
+      shop: {
+        eyebrow:"Kollektion Frühling / Ausrutscher 2026", h2:"Unsere meistverkauften Flecken",
+        sub:"Jeder Aufdruck ist von Hand gestaltet, um entweder maximal unschuldig — oder maximal verdächtig zu wirken. Du entscheidest über die Strategie.",
+        filters:["Alle","Essen","Getränke","Kein Kommentar","Saisonal"],
+        addBtn:"In den Warenkorb",
+        stock:(n)=>`Noch ${n} Stück verfügbar`
+      },
+      products: [
+        {name:"Klassisches Ketchup", tag:"Bestseller", tagClass:"hot", price:"21 €", color:"#a4291f", ring:"#e07a5f", desc:"Ein vielseitiger roter Fleck auf Brusthöhe. Passt zu jeder Hot-Dog-Ausrede."},
+        {name:"Morgenkaffee", tag:"Bestseller", tagClass:"hot", price:"21 €", color:"#6b4226", ring:"#a9764f", desc:"Eine braune Schliere in Eile-Form. Perfekt für das Morgenmeeting, das du eigentlich nicht wolltest."},
+        {name:"Curry-Zwischenfall", tag:"Neu", tagClass:"new", price:"23 €", color:"#c98a1f", ring:"#e3b94a", desc:"Ein gelb-oranger Fleck mit einem Hauch Kreuzkümmel. Niemand fragt, woher der Geruch kommt."},
+        {name:"Mysteriöses Grau", tag:"Kein Kommentar", tagClass:"", price:"24 €", color:"#4a4a44", ring:"#8a8a7f", desc:"Wir fragen nicht, wir erklären nicht. Der Allzweckfleck für Situationen, über die man nicht spricht."},
+        {name:"Schokolade… Vermutlich", tag:"", tagClass:"", price:"21 €", color:"#3b2416", ring:"#7a5233", desc:"99 % Wahrscheinlichkeit, dass es Schokolade ist. Das 1 % Zweifel sorgt dafür, dass niemand nachfragt."},
+        {name:"Weinabend-Soße", tag:"Saisonal", tagClass:"new", price:"25 €", color:"#5e2233", ring:"#a45c73", desc:"Ein tiefer bordeauxroter Fleck für Partys, an deren Details du dich lieber nicht erinnerst."},
+        {name:"Weihnachts-Borschtsch", tag:"Saisonal", tagClass:"new", price:"25 €", color:"#8e1f3b", ring:"#c15b74", desc:"Tradition verlangt, mindestens einmal im Jahr Borschtsch zu verschütten. Wir übernehmen das für dich — ganz ohne Tischdecken-Wäsche."},
+        {name:"Gras (Wirklich Nur Gras)", tag:"", tagClass:"", price:"20 €", color:"#4f6b2e", ring:"#8aa85f", desc:"Eine grüne Schliere am Ellbogen. Ja, wirklich nur Gras. Hör auf zu fragen, Karolina."}
+      ],
+      testi: {
+        eyebrow:"Das sagen unsere Kund:innen", h2:"Geschichten, die wir lieber ohne Kontext stehen lassen",
+        items:[
+          {stars:5, text:"Niemand hat den echten Fleck bemerkt. Ich bin wie ein Held in die Vorstandssitzung spaziert, nicht wie das Opfer eines Bürostuhls.", who:"Markus, 41, Vertrieb"},
+          {stars:5, text:"Mein Mann fragte, was mit dem T-Shirt passiert ist. Ich sagte, es sei eine limitierte Auflage. Er hat's geglaubt. Ich fast auch.", who:"Olga, 29, Freelancerin"},
+          {stars:4, text:"Habe den „Curry-Zwischenfall“ für die Hochzeit meines Cousins bestellt. Niemand hat nach der echten Soße gefragt. Ein Stern Abzug, weil ich das Curry jetzt vermisse.", who:"Bartek, 33, Trauzeuge"}
+        ]
+      },
+      banner: {
+        h2:"Sonderflecken nach Maß",
+        p:"Du hast einen ganz bestimmten Zwischenfall, der eine präzise Tarnung braucht? Schick uns eine Beschreibung (oder, wenn's sein muss, ein Foto) — unser Designteam erstellt einen 1:1-Aufdruck, damit niemand je erahnt, was wirklich passiert ist.",
+        cta:"Angebot anfragen"
+      },
+      faq: {
+        eyebrow:"Bevor du dem Support schreibst", h2:"Fragen, die sowieso alle stellen",
+        items:[
+          {q:"Kaschiert der Aufdruck wirklich meinen Fleck?", a:"Statistisch gesehen — ja. In 87 % der Fälle richtet sich die Aufmerksamkeit auf unseren deutlich auffälligeren Fleck. Die restlichen 13 % bemerken sowieso nie etwas."},
+          {q:"Was, wenn mein Fleck an einer etwas anderen Stelle ist?", a:"Wir haben Motive für Ärmel, Rücken, Kragen und den Klassiker „im Bereich des Bunds“. Für alles Speziellere nutz die Option „Sonderfleck nach Maß“ oben."},
+          {q:"Sind die Flecken wirklich aufgedruckt und nicht echt?", a:"Ja, alle PLAMA.-Flecken sind zu 100 % digital und überstehen eine 60-°C-Wäsche ohne Farbverlust — im Gegensatz zu dem anderen, echten."},
+          {q:"Wie lange dauert die Lieferung?", a:"3–5 Werktage. Falls du sofort eine Tarnung brauchst, empfehlen wir, ein Ersatzshirt in der Schreibtischschublade zu haben. So wie wir."},
+          {q:"Rückgabe und Umtausch?", a:"30 Tage Rückgaberecht, vorausgesetzt das Shirt kommt sauberer zurück, als wir es verschickt haben — was, ehrlich gesagt, nicht schwer sein sollte."}
+        ]
+      },
+      footer: {
+        tagline:"Mode für alle, die im Leben schon einmal zwei Sekunden mehr gebraucht haben, bevor jemand bemerkt hat, was wirklich passiert ist.",
+        h1:"Shop", h2:"Service", h3:"Über uns",
+        list1:["Bestseller","Neuheiten","Geschenkkarten","Sonderfleck nach Maß"],
+        list2:["FAQ","Versand & Rückgabe","Größentabelle","Kontakt (diskret)"],
+        list3:["Unsere Mission","Bewertungen","Presse","Karriere"],
+        bottom1:"© 2026 PLAMA. Alle Rechte vorbehalten. Alle Flecken fiktiv, alle Ausrutscher — leider echt.",
+        bottom2:"Wir übernehmen keine Haftung für Flecken, die sich unter unseren Flecken verstecken."
+      },
+      toast: {
+        messages:[
+          "Zum Warenkorb hinzugefügt. Deine früheren Ausrutscher sind jetzt sicher.",
+          "Gute Wahl. Niemand wird je erahnen, was wirklich passiert ist.",
+          "Im Warenkorb! Wir empfehlen, es anzuziehen, bevor jemand den Raum betritt.",
+          "Hinzugefügt. Deine Tarnung ist unterwegs."
+        ],
+        empty:"Warenkorb ist leer. Hoffen wir, dass es dabei bleibt.",
+        hasItems:(n)=>`Im Warenkorb: ${n} Stück. Wir akzeptieren nur diskrete Zahlungen.`
+      }
+    }
+  };
+
+  let currentLang = 'pl';
+  let cartCount = 0;
+
+  // ---------- Stain SVG generator ----------
+  function stainSVG(color, ringColor, seed, size){
+    size = size || 220;
+    function rnd(n){ return (Math.sin(seed*999 + n*57.13) + 1)/2; }
+    const cx = size/2, cy = size/2;
+    const points = 10;
+    const baseR = size*0.30;
+    let path = "";
+    let pts = [];
+    for(let i=0;i<points;i++){
+      const angle = (Math.PI*2/points)*i;
+      const r = baseR * (0.72 + rnd(i)*0.55);
+      const x = cx + Math.cos(angle)*r;
+      const y = cy + Math.sin(angle)*r*0.92;
+      pts.push([x,y]);
+    }
+    path += `M ${pts[0][0]} ${pts[0][1]} `;
+    for(let i=0;i<points;i++){
+      const p0 = pts[i];
+      const p1 = pts[(i+1)%points];
+      const mx = (p0[0]+p1[0])/2 + (rnd(i+20)-0.5)*18;
+      const my = (p0[1]+p1[1])/2 + (rnd(i+40)-0.5)*18;
+      path += `Q ${mx} ${my} ${p1[0]} ${p1[1]} `;
+    }
+    path += "Z";
+
+    const dAngle = rnd(99)*Math.PI*2;
+    const dx = cx + Math.cos(dAngle)*(baseR*1.35);
+    const dy = cy + Math.sin(dAngle)*(baseR*1.1);
+    const dr = size*0.045 + rnd(88)*size*0.03;
+
+    return `
+    <svg viewBox="0 0 ${size} ${size}" width="100%" height="100%">
+      <defs>
+        <filter id="rough-${seed}" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="1.1" />
+        </filter>
+      </defs>
+      <ellipse cx="${cx}" cy="${cy}" rx="${baseR*1.28}" ry="${baseR*1.12}" fill="${ringColor}" opacity="0.28"/>
+      <path d="${path}" fill="${ringColor}" opacity="0.55" filter="url(#rough-${seed})"/>
+      <path d="${path}" fill="${color}" transform="translate(${cx},${cy}) scale(0.82) translate(${-cx},${-cy})" filter="url(#rough-${seed})"/>
+      <circle cx="${dx}" cy="${dy}" r="${dr}" fill="${color}" opacity="0.85"/>
+      <circle cx="${dx}" cy="${dy}" r="${dr*1.6}" fill="${ringColor}" opacity="0.25"/>
+    </svg>`;
+  }
+
+  function tshirtSVG(innerContent, shirtColor){
+    shirtColor = shirtColor || "#fffaf0";
+    return `
+    <svg viewBox="0 0 300 320" width="100%" height="100%">
+      <path d="M100 18 L60 40 L20 90 L55 118 L78 100 L78 300 L222 300 L222 100 L245 118 L280 90 L240 40 L200 18
+               C200 40 172 54 150 54 C128 54 100 40 100 18 Z"
+            fill="${shirtColor}" stroke="#d8c8ab" stroke-width="4" stroke-linejoin="round"/>
+      <g transform="translate(96,112) scale(0.5)">
+        ${innerContent}
+      </g>
+    </svg>`;
+  }
+
+  function starString(n){
+    return "★".repeat(n) + "☆".repeat(5-n);
+  }
+
+  // ---------- Render ----------
+  function render(lang){
+    currentLang = lang;
+    const t = I18N[lang];
+    document.documentElement.lang = lang;
+    document.title = t.title;
+
+    // lang switch button + menu
+    document.getElementById('langCurrentLabel').textContent = lang.toUpperCase();
+    document.querySelectorAll('#langMenu button').forEach(b=>{
+      b.classList.toggle('active', b.dataset.lang === lang);
+    });
+
+    // nav
+    document.getElementById('navShop').textContent = t.nav.shop;
+    document.getElementById('navHow').textContent = t.nav.how;
+    document.getElementById('navReviews').textContent = t.nav.reviews;
+    document.getElementById('navFaq').textContent = t.nav.faq;
+    document.getElementById('cartLabel').textContent = t.nav.cart;
+
+    // hero
+    document.getElementById('heroEyebrow').textContent = t.hero.eyebrow;
+    document.getElementById('heroH1').innerHTML = t.hero.h1;
+    document.getElementById('heroLead').textContent = t.hero.lead;
+    document.getElementById('btnPrimary').textContent = t.hero.btnPrimary;
+    document.getElementById('btnGhost').textContent = t.hero.btnGhost;
+    document.getElementById('trustText').textContent = t.hero.trust;
+    document.getElementById('heroTag1').textContent = t.hero.tag1;
+    document.getElementById('heroTag2').textContent = t.hero.tag2;
+    document.getElementById('heroShirt').innerHTML = tshirtSVG(stainSVG("#a4291f","#e07a5f", 42, 160));
+
+    // strip
+    const words = t.strip.concat(t.strip);
+    document.getElementById('stripInner').innerHTML = words.map(w=>`<span>${w}</span>`).join('');
+
+    // steps
+    document.getElementById('stepsEyebrow').textContent = t.steps.eyebrow;
+    document.getElementById('stepsH2').textContent = t.steps.h2;
+    document.getElementById('stepsSub').textContent = t.steps.sub;
+    document.getElementById('stepsGrid').innerHTML = t.steps.items.map((s,i)=>`
+      <div class="step">
+        <div class="num">${i+1}</div>
+        <h3>${s.title}</h3>
+        <p>${s.desc}</p>
+        <div class="step-quote">${s.quote}</div>
+      </div>
+    `).join('');
+
+    // shop
+    document.getElementById('shopEyebrow').textContent = t.shop.eyebrow;
+    document.getElementById('shopH2').textContent = t.shop.h2;
+    document.getElementById('shopSub').textContent = t.shop.sub;
+    document.getElementById('filters').innerHTML = t.shop.filters.map(f=>`<span class="filter">${f}</span>`).join('');
+
+    const grid = document.getElementById('productGrid');
+    grid.innerHTML = '';
+    t.products.forEach((p, i)=>{
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div class="card-media">
+          ${p.tag ? `<span class="badge-tag ${p.tagClass}">${p.tag}</span>` : ''}
+          <div class="shirt-base">${tshirtSVG(stainSVG(p.color, p.ring, i+1, 130))}</div>
+        </div>
+        <div class="card-body">
+          <h3>${p.name}</h3>
+          <div class="desc">${p.desc}</div>
+          <div class="card-foot">
+            <div>
+              <div class="price">${p.price}</div>
+              <div class="stock">${t.shop.stock(8 + (i*3)%14)}</div>
+            </div>
+            <button class="add-btn" data-name="${p.name}">${t.shop.addBtn}</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    // testimonials
+    document.getElementById('testiEyebrow').textContent = t.testi.eyebrow;
+    document.getElementById('testiH2').textContent = t.testi.h2;
+    document.getElementById('testiGrid').innerHTML = t.testi.items.map(item=>`
+      <div class="testi">
+        <span class="stars">${starString(item.stars)}</span>
+        <p>“${item.text}”</p>
+        <div class="who">— ${item.who}</div>
+      </div>
+    `).join('');
+
+    // banner
+    document.getElementById('bannerH2').textContent = t.banner.h2;
+    document.getElementById('bannerP').textContent = t.banner.p;
+    document.getElementById('bannerCta').textContent = t.banner.cta;
+
+    // faq
+    document.getElementById('faqEyebrow').textContent = t.faq.eyebrow;
+    document.getElementById('faqH2').textContent = t.faq.h2;
+    document.getElementById('faqList').innerHTML = t.faq.items.map((qa,i)=>`
+      <details class="qa" ${i===0 ? 'open' : ''}>
+        <summary>${qa.q}</summary>
+        <p>${qa.a}</p>
+      </details>
+    `).join('');
+
+    // footer
+    document.getElementById('footTagline').textContent = t.footer.tagline;
+    document.getElementById('footH1').textContent = t.footer.h1;
+    document.getElementById('footH2').textContent = t.footer.h2;
+    document.getElementById('footH3').textContent = t.footer.h3;
+    document.getElementById('footList1').innerHTML = t.footer.list1.map(l=>`<li><a href="#sklep">${l}</a></li>`).join('');
+    document.getElementById('footList2').innerHTML = t.footer.list2.map(l=>`<li><a href="#faq">${l}</a></li>`).join('');
+    document.getElementById('footList3').innerHTML = t.footer.list3.map(l=>`<li><a href="#jak-to-dziala">${l}</a></li>`).join('');
+    document.getElementById('footBottom1').textContent = t.footer.bottom1;
+    document.getElementById('footBottom2').textContent = t.footer.bottom2;
+  }
+
+  // ---------- Cart + toast ----------
+  const cartCountEl = document.getElementById('cartCount');
+  const toast = document.getElementById('toast');
+
+  function showToast(msg){
+    toast.textContent = msg;
+    toast.classList.add('show');
+    clearTimeout(window.__toastTimer);
+    window.__toastTimer = setTimeout(()=> toast.classList.remove('show'), 2600);
+  }
+
+  // ---------- Language dropdown open/close ----------
+  const langSwitchEl = document.getElementById('langSwitch');
+  const langCurrentBtn = document.getElementById('langCurrentBtn');
+
+  function openLangMenu(){
+    langSwitchEl.classList.add('open');
+    langCurrentBtn.setAttribute('aria-expanded', 'true');
+  }
+  function closeLangMenu(){
+    langSwitchEl.classList.remove('open');
+    langCurrentBtn.setAttribute('aria-expanded', 'false');
+  }
+  function toggleLangMenu(){
+    langSwitchEl.classList.contains('open') ? closeLangMenu() : openLangMenu();
+  }
+
+  document.addEventListener('click', (e)=>{
+    const langOption = e.target.closest('#langMenu button');
+    if(langOption){
+      render(langOption.dataset.lang);
+      closeLangMenu();
+      return;
+    }
+    if(e.target.closest('#langCurrentBtn')){
+      toggleLangMenu();
+      return;
+    }
+    if(!e.target.closest('#langSwitch')){
+      closeLangMenu();
+    }
+    const btn = e.target.closest('.add-btn');
+    if(btn){
+      cartCount++;
+      cartCountEl.textContent = cartCount;
+      const t = I18N[currentLang];
+      const msg = t.toast.messages[Math.floor(Math.random()*t.toast.messages.length)];
+      showToast(`“${btn.dataset.name}” — ${msg}`);
+      return;
+    }
+    if(e.target.closest('#cartBtn')){
+      const t = I18N[currentLang];
+      showToast(cartCount === 0 ? t.toast.empty : t.toast.hasItems(cartCount));
+    }
+  });
+
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape') closeLangMenu();
+  });
+
+  // ---------- Default language: browser/device settings ----------
+ 
+  function detectDefaultLang(){
+    const supported = ['pl', 'en', 'de'];
+    const candidates = (navigator.languages && navigator.languages.length)
+      ? navigator.languages
+      : [navigator.language || 'pl'];
+    for(const c of candidates){
+      const code = String(c).toLowerCase().split('-')[0];
+      if(supported.includes(code)) return code;
+    }
+    return 'pl';
+  }
+
+  render(detectDefaultLang());
+</script>
+
+</body>
+</html>
